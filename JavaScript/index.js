@@ -25,13 +25,15 @@ const buildMoviesCategorySection = (movieObj, categoryName) => {
     }).join('');
 
     moviesContainer.innerHTML = `
-        <h3 class="category_heading">${categoryName}</h3>
+    <i id='prev' class="prev_button fa-solid fa-angle-left"></i>
+    <h3 class="category_heading">${categoryName}</h3>
         <div class="movies_list">
-            <i class="prev_button fa-solid fa-angle-left"></i>
-            <i class="next_button fa-solid fa-angle-right"></i>
             ${moviesListElement}
         </div>
+    <i id='next' class="next_button fa-solid fa-angle-right"></i>
     `;
+
+    movieCategoriesSection.appendChild(moviesContainer);
 };
 
 const fetchMoviesList = (fetchURL, categoryName) => {
@@ -60,7 +62,6 @@ const updateBannerSection = (movie) => {
         movieCategories = categories; 
 
         for(let index in movieCategories) {
-            console.log(movieCategories[index].id + ": " + movie.genre_ids[0]);
             if(movieCategories[index].id === movie.genre_ids[0]) {
                 movieCategory = movieCategories[index].name;
                 break;
