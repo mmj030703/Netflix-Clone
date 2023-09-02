@@ -3,20 +3,24 @@ document.addEventListener('DOMContentLoaded', () => {
     //& Code Starts Here
     const movieCategorySection = document.querySelector('.movie_categories_section');
 
+
+    //& Functions Definition Start Here
+    const showAndHideIcons = (moviesContainer, movieCarousel, maxScrollingWidth) => {                       
+        const prev = moviesContainer.querySelector('#prev');
+        const next = moviesContainer.querySelector('#next');
+
+        setTimeout(() => {
+            prev.style.display = movieCarousel.scrollLeft === 0 ? 'none' : 'block';
+            next.style.display = movieCarousel.scrollLeft >= maxScrollingWidth ? 'none' : 'block';                
+        }, 10);
+    }
+
+
+    // Carousels of Movies List
+    const movieCarousels = movieCategorySection.querySelectorAll('.movies_list');
+
     // Attach event listeners to dynamically generated icons using event delegation
     movieCategorySection.addEventListener('click', (event) => {
-        //& Functions Definition Start Here
-        const showAndHideIcons = () => {
-            const prev = parent.querySelector('#prev');
-            const next = parent.querySelector('#next');
-
-            prev.style.display = movieCarousel.scrollLeft === 0 ? 'none' : 'block';
-            next.style.display = movieCarousel.scrollLeft === maxScrollingWidth ? 'none' : 'block';
-        }
-
-        // Carousels of Movies List
-        const movieCarousels = movieCategorySection.querySelectorAll('.movies_list');
-
         // Prev or Next icon 
         const icon = event.target;
 
@@ -29,6 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Scrolling width is width of four movie_item + column gap of four movie_item 
             const scrollingWidth = (firstImgWidth * 4) + (16 * 4);
+
+            
 
             // Maximum scrolling widh of carousel i.e scrollable width of carousel - visible width of carousel
             const maxScrollingWidth = movieCarousel.scrollWidth - movieCarousel.clientWidth;
@@ -47,7 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 movieCarousel.scrollLeft -= scrollingWidth;
             }
 
-            showAndHideIcons();
+            setTimeout(() => {
+                showAndHideIcons(parent, movieCarousel, maxScrollingWidth);
+            }, 50);
         }
         // If next icon clicked then
         else if (icon.matches('#next')) {
@@ -62,9 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const maxScrollingWidth = movieCarousel.scrollWidth - movieCarousel.clientWidth;
 
             // Adding scrolling width from scrollleft of movie carousel to scroll to left 
-            movieCarousel.scrollLeft += scrollingWidth;
+            movieCarousel.scrollLeft += scrollingWidth + 2;
 
-            showAndHideIcons();
+            setTimeout(() => {
+                showAndHideIcons(parent, movieCarousel, maxScrollingWidth);
+            }, 50);
         }
     });
 });
