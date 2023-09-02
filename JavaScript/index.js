@@ -14,19 +14,24 @@ const buildMoviesCategorySection = (movieObj, categoryName) => {
 
     const moviesContainer = document.createElement('div');
     moviesContainer.classList.add('movie_container', 'container'); 
-    
+
     const moviesListElement = movieObj.map(movie => {
+        const movieTitle = movie.title.length > 30 ? movie.title.slice(0,30) + '...' : movie.title;
         return `
             <div class="movie_item">
                 <img class="movie_image" src="${imgEndpoint}${movie.backdrop_path}">
-                <p class="movie_name">${movie.title}</p>
+                <p class="movie_name">${movieTitle}</p>
+                
+                <div class="extra">
+                    <i class="fa-regular fa-thumbs-up"></i>                
+                </div>
             </div>
         `;
     }).join('');
 
     moviesContainer.innerHTML = `
     <i id='prev' class="prev_button fa-solid fa-angle-left"></i>
-    <h3 class="category_heading">${categoryName}</h3>
+    <h3 class="category_heading">${categoryName}<span class="explore">Explore more <i class="fa-solid fa-angle-right"></i></span></h3>
         <div class="movies_list">
             ${moviesListElement}
         </div>
