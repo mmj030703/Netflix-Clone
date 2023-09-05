@@ -19,9 +19,9 @@ const buildMoviesCategorySection = (movieObj, categoryName) => {
         const movieTitle = movie.title.length > 30 ? movie.title.slice(0,30) + '...' : movie.title;
         return `
             <div class="movie_item">
+                <iframe class='yt_iframe' src="http://www.youtube.com/embed/VYsVOamdB0g" frameborder="0" allowfullscreen></iframe>
                 <img class="movie_image" src="${imgEndpoint}${movie.backdrop_path}">
                 <p class="movie_name">${movieTitle}</p>
-                
                 <div class="extra">
                     <i class="fa-regular fa-thumbs-up"></i>                
                 </div>
@@ -39,6 +39,21 @@ const buildMoviesCategorySection = (movieObj, categoryName) => {
     `;
 
     movieCategoriesSection.appendChild(moviesContainer);
+
+    // 
+    const movieItems = movieCategoriesSection.querySelectorAll('.movie_item');
+    movieItems.forEach(movieItem => {        
+        movieItem.addEventListener('mouseenter', (event) => {
+            const ytIframe = movieItem.querySelector('.yt_iframe');
+            ytIframe.style.display = "block";
+            console.log("movie");
+        });
+
+        movieItem.addEventListener('mouseleave', (event) => {
+            const ytIframe = movieItem.querySelector('.yt_iframe');
+            ytIframe.style.display = "none";
+        });
+    });
 };
 
 const fetchMoviesList = (fetchURL, categoryName) => {
@@ -72,7 +87,7 @@ const updateBannerSection = (movie) => {
                 break;
             }
         }
-
+        
         const bannerSection = document.querySelector('.banner');
         bannerSection.style.backgroundImage = `url("${imgEndpoint}${movie.backdrop_path}")`;
     
@@ -93,7 +108,8 @@ const updateBannerSection = (movie) => {
         `;
     
         bannerSection.appendChild(bannerContainer);
-     });
+     })
+     .catch(error => console.error(error));
 }
 
 const fetchTrendingMovies = () => {
