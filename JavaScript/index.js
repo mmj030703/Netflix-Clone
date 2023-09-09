@@ -6,7 +6,8 @@ const imgEndpoint = "	https://image.tmdb.org/t/p/original";
 const apiPaths = {
     fetchAllCategories: `${apiEndpoint}/genre/movie/list?api_key=${apiKey}`,
     fetchMoviesList: (categoryId) => `${apiEndpoint}/discover/movie?api_key=${apiKey}&with_genres=${categoryId}`,
-    fetchTrendingMovies: `${apiEndpoint}/trending/movie/week?api_key=${apiKey}`
+    fetchTrendingMovies: `${apiEndpoint}/trending/movie/week?api_key=${apiKey}`,
+    searchMovieById: (movieId) => `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`
 };
 
 const buildMoviesCategorySection = (movieObj, categoryName) => {
@@ -17,13 +18,28 @@ const buildMoviesCategorySection = (movieObj, categoryName) => {
 
     const moviesListElement = movieObj.map(movie => {
         const movieTitle = movie.title.length > 30 ? movie.title.slice(0,30) + '...' : movie.title;
+
         return `
             <div class="movie_item">
-                <iframe class='yt_iframe' src="http://www.youtube.com/embed/VYsVOamdB0g" frameborder="0" allowfullscreen></iframe>
                 <img class="movie_image" src="${imgEndpoint}${movie.backdrop_path}">
                 <p class="movie_name">${movieTitle}</p>
                 <div class="extra">
-                    <i class="fa-regular fa-thumbs-up"></i>                
+                    <div class="buttons">
+                        <div class="left_btns">
+                            <i class="like fa-regular fa-thumbs-up"></i>                
+                            <i class="wishlist fa-regular fa-plus"></i>                         
+                        </div>                    
+                        <div class="right_btns">
+                            <i id='prev' class="more_details fa-solid fa-angle-down"></i>                        
+                        </div>                    
+                    </div>
+                    <div class="movie_data">
+                        <span class="match">100% Match</span>     
+                        <p class='age_limit_box'><span class="age_limit">10+</span></p> 
+                        <span class='duration'>2h 30m</span>
+                        <p class='hd'><span class="quality">HD</span></p> 
+                    </div>    
+                    <ul class="movie_genres"></ul>           
                 </div>
             </div>
         `;
@@ -40,19 +56,51 @@ const buildMoviesCategorySection = (movieObj, categoryName) => {
 
     movieCategoriesSection.appendChild(moviesContainer);
 
-    // 
-    const movieItems = movieCategoriesSection.querySelectorAll('.movie_item');
-    movieItems.forEach(movieItem => {        
-        movieItem.addEventListener('mouseenter', (event) => {
-            const ytIframe = movieItem.querySelector('.yt_iframe');
-            ytIframe.style.display = "block";
-            console.log("movie");
-        });
+    Array.from(movieCategoriesSection.children).forEach(movieCategory => {
+        const movieItems = movieCategory.querySelectorAll('.movie_item');
+    
+        for(let movieItemInd = 0; movieItemInd < movieItems.length; movieItemInd++) {
+            movieItems[movieItemInd].addEventListener('mouseenter', (event) => {
+                event.stopImmediatePropagation();
 
-        movieItem.addEventListener('mouseleave', (event) => {
-            const ytIframe = movieItem.querySelector('.yt_iframe');
-            ytIframe.style.display = "none";
-        });
+                // Changing match percentage
+                const matchElement = movieItems[movieItemInd].querySelector('.match');
+                const match = Math.floor(Math.random() * 100);
+                matchElement.textContent = `${match}% Match`;
+
+                // Changing movie duration
+                let movieDuration = null;
+                const movieId = movieObj[movieItemInd].id;
+                const res = fetch(apiPaths.searchMovieById(movieId));
+                res
+                .then(res => res.json())
+                .then(res => {
+                    movieDuration = res.runtime;
+                    
+                    const movieDurationElement = movieItems[movieItemInd].querySelector('.duration'); 
+                    const hours = Math.floor(movieDuration / 60);
+                    const minutes = movieDuration - (hours * 60) - 1;
+                    movieDurationElement.textContent = `${hours}h ${minutes}m`;
+
+                    // Changing movies genres
+                    const movieGenres = movieItems[movieItemInd].querySelector('.movie_genres');
+                    const genres = res.genres.slice(0,3).map(genre => genre.name);
+                    const lists = Array.from(genres).map(genre => {                
+                        return `<li>${genre}</li>`;
+                    }).join('');
+                    movieGenres.innerHTML = lists;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+
+                // Changing age limit
+                const ageLimitElement = movieItems[movieItemInd].querySelector('.age_limit');
+                const ageLimit = Math.floor(Math.random() * 18);
+                ageLimitElement.textContent = `${ageLimit}+`;
+
+            });
+        };
     });
 };
 
@@ -109,7 +157,7 @@ const updateBannerSection = (movie) => {
     
         bannerSection.appendChild(bannerContainer);
      })
-     .catch(error => console.error(error));
+     .catch(error => console.error("error" + error));
 }
 
 const fetchTrendingMovies = () => {
