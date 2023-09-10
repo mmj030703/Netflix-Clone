@@ -338,7 +338,6 @@ header {
 
 .movie_item .extra i:hover {
     background-color: #464040;
-    border-color: #fff;
 }
 
 .movie_item .extra .buttons {
@@ -349,6 +348,10 @@ header {
 .movie_item .extra .buttons .left_btns .like,
 .movie_item .extra .buttons .left_btns .wishlist {
     position: relative;
+}
+
+.movie_item .extra .buttons .right_btns a {
+    color: #fff;
 }
 
 .movie_item .extra .buttons .right_btns .more_details {
@@ -462,4 +465,8 @@ header {
 
 .black_bg {
     background-color: #000;
+}
+
+.likeBtn_liked, .wishlist_clicked {
+    background-color: #464040;
 }

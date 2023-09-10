@@ -30,7 +30,7 @@ const buildMoviesCategorySection = (movieObj, categoryName) => {
                             <i class="wishlist fa-regular fa-plus"></i>                         
                         </div>                    
                         <div class="right_btns">
-                            <i id='prev' class="more_details fa-solid fa-angle-down"></i>                        
+                            <a href='./HTML/movie_details.html?movieId=${movie.id}' target='_blank'><i id='prev' class="more_details fa-solid fa-angle-down"></i></a>                        
                         </div>                    
                     </div>
                     <div class="movie_data">
@@ -60,23 +60,31 @@ const buildMoviesCategorySection = (movieObj, categoryName) => {
         const movieItems = movieCategory.querySelectorAll('.movie_item');
     
         for(let movieItemInd = 0; movieItemInd < movieItems.length; movieItemInd++) {
+            // Tasks to perform on mouseenter event
             movieItems[movieItemInd].addEventListener('mouseenter', (event) => {
+                // To stop the propagation of event i.e. event does not goes into its child elements
                 event.stopImmediatePropagation();
 
                 // Changing match percentage
                 const matchElement = movieItems[movieItemInd].querySelector('.match');
+
+                // Generating random match percent for the movie
                 const match = Math.floor(Math.random() * 100);
                 matchElement.textContent = `${match}% Match`;
 
                 // Changing movie duration
                 let movieDuration = null;
                 const movieId = movieObj[movieItemInd].id;
+
+                // Fetching movie data from TMDB API based on movie id. 
                 const res = fetch(apiPaths.searchMovieById(movieId));
                 res
                 .then(res => res.json())
                 .then(res => {
+                    // Storing movie duration from response object to variable
                     movieDuration = res.runtime;
                     
+                    // Accessing the duration element from DOM. 
                     const movieDurationElement = movieItems[movieItemInd].querySelector('.duration'); 
                     const hours = Math.floor(movieDuration / 60);
                     const minutes = movieDuration - (hours * 60) - 1;
@@ -96,9 +104,45 @@ const buildMoviesCategorySection = (movieObj, categoryName) => {
 
                 // Changing age limit
                 const ageLimitElement = movieItems[movieItemInd].querySelector('.age_limit');
+                // Randomly generating age for the age limit element of the movie.
                 const ageLimit = Math.floor(Math.random() * 18);
                 ageLimitElement.textContent = `${ageLimit}+`;
+            });
 
+            // Click Event on Like Button
+            const likeBtn = movieItems[movieItemInd].querySelector('.like');
+            likeBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                
+                if(likeBtn.classList.contains('like')) {
+                    likeBtn.classList.remove('like');
+                    likeBtn.classList.add('likeBtn_liked');
+                    alert('Liked');
+                }
+                else {
+                    likeBtn.classList.add('like');
+                    likeBtn.classList.remove('likeBtn_liked');
+                    alert('Unliked');
+                }
+            });
+
+            // Click Event on Wishlist Button
+            const wishlistBtn = movieItems[movieItemInd].querySelector('.wishlist');
+            wishlistBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                
+                if(wishlistBtn.classList.contains('wishlist')) {
+                    wishlistBtn.classList.remove('wishlist');
+                    wishlistBtn.classList.add('wishlist_clicked');
+                    alert('Added to Wishlist');
+                }
+                else {
+                    wishlistBtn.classList.add('wishlist');
+                    wishlistBtn.classList.remove('wishlist_clicked');
+                    alert('Removed from Wishlist');
+                }
             });
         };
     });
@@ -137,6 +181,7 @@ const updateBannerSection = (movie) => {
         }
         
         const bannerSection = document.querySelector('.banner');
+        bannerSection.style.visibility = "visible";
         bannerSection.style.backgroundImage = `url("${imgEndpoint}${movie.backdrop_path}")`;
     
         const bannerContainer = document.createElement('div');
@@ -157,7 +202,11 @@ const updateBannerSection = (movie) => {
     
         bannerSection.appendChild(bannerContainer);
      })
-     .catch(error => console.error("error" + error));
+     .catch(error => {
+        console.error("error" + error);
+        const bannerSection = document.querySelector('.banner');
+        bannerSection.style.visibility = "hidden";
+    });
 }
 
 const fetchTrendingMovies = () => {
