@@ -1,27 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Details</title>
-    <link rel="stylesheet" href="../CSS/index.css">
+    <link rel="stylesheet" href="../CSS/movie_details.css">
     <!-- Font Awesome CDN Link -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Google Icons Link -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Favicon -->
     <link rel="shortcut icon" href="../Images/logo_small.png" type="image/x-icon">
-    <style>
-        body {
-            color: #fff;
-        }
-        img {
-            width: 299px;
-        }
-    </style>
 </head>
+
 <body>
-    <h1 class="movie_title"></h1>
-    <img src="" alt="" class="movie_image">
+    <!-- Video Container -->
+
+    <div class="video_container">
+        <div class="video">
+            <!-- <iframe src="https://www.youtube.com/embed/COv52Qyctws?si=pXAr92MDUVGHBYji?autoplay=1&rel=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> -->
+            <iframe src="https://www.youtube.com/embed/vS3_72Gb-bI?si=YFCcAbfhnq35bakq?autoplay=1&rel=0"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen></iframe>
+            <div class="iframe_overlay"></div>
+            <div class="iframe_bottom_overlay"></div>
+            <div class="buttons">
+                <button><i class="playBtn fa-solid fa-play"></i> Play</button>
+                <span class="unmute material-icons">
+                    volume_up
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Container -->
+
+    <!-- Movie Details Section -->
+
+    <section class="movie_details_section">
+        <div class="movie_details_container container">
+            <h2 class="movie_title">Indiana Jones and the Dial of Destiny</h2>
+            <div class="details">
+                <div class="movie_details">
+                    <div class="extra">
+                        <span class="match">100% Match</span>
+                        <span class="year_of_release">2023</span>
+                        <p class='age_limit_box'><span class="age_limit">10+</span></p>
+                        <span class='duration'>2h 30m</span>
+                        <p class='hd'><span class="quality">HD</span></p>
+                    </div>
+                    <div class="description">
+                        <p>The youngest of King Triton’s daughters, and the most defiant, Ariel longs to find out more
+                            about the world beyond the sea, and while visiting the surface, falls for the dashing Prince
+                            Eric. With mermaids forbidden to interact with humans, Ariel makes a deal with the evil sea
+                            witch, Ursula, which gives her a chance to experience life on land, but ultimately places
+                            her life – and her father’s crown – in jeopardy.</p>
+                    </div>
+                </div>
+                <div class="other_details">
+                    <div class="genres">
+                        <span>Genres: </span>
+                        <ul class="movie_genres">
+                            <li>Adventure</li>
+                            <li>Drama</li>
+                            <li>Action</li>
+                        </ul>
+                    </div>
+                    <div class="language">
+                        <span>Available in: </span>
+                        <span class="movie_language">English</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Movie Details Section -->
+
+    <!-- Cast Details -->
+
+    <section class="cast_section">
+        <div class="cast_container container">
+            <h2 class="cast_heading">Cast</h2>
+            <div class="cast">
+                <div class="cast_image">
+                    <img src="../Images/actor1.jpg" alt="Shah Rukh Khan Image">
+                    <p class="cast_name">Shah Rukh Khan</p>
+                </div>
+                <div class="cast_image">
+                    <img src="../Images/actor2.jpg" alt="Nayantara Image">
+                    <p class="cast_name">Nayantara</p>
+                </div>
+                <div class="cast_image">
+                    <img src="../Images/actor3.jpg" alt="Vijay Sethupati Image">
+                    <p class="cast_name">Vijay Sethupati</p>
+                </div>
+                <div class="cast_image">
+                    <img src="../Images/actor4.jpg" alt="Priya Mani Image">
+                    <p class="cast_name">Priya Mani</p>
+                </div>
+                <div class="cast_image">
+                    <img src="../Images/actor5.jpeg" alt="Sanya Malhotra Image">
+                    <p class="cast_name">Sanya Malhotra</p>
+                </div>
+                <div class="cast_image">
+                    <img src="../Images/actor6.jpg" alt="Sunil Grover Image">
+                    <p class="cast_name">Sunil Grover</p>
+                </div>
+                <div class="cast_image">
+                    <img src="../Images/actor7.jpg" alt="Yogi Babu Image">
+                    <p class="cast_name">Yogi Babu</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cast Details -->
+
     <!-- Script -->
-    <script src="../JavaScript/movie_details.js"></script>
+    <script src="../JavaScript/movie_details.js" defer></script>
 </body>
+
 </html>

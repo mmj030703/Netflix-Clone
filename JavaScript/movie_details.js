@@ -14,16 +14,20 @@ const url = window.location.search;
 const urlParams = new URLSearchParams(url);
 const movieId = urlParams.get('movieId');
 
-const res = fetch(apiPaths.searchMovieById(movieId));
+const bootApp = () => {
+    window.addEventListener('scroll', (event) => {
+        const scrollY = window.scrollY;
+        const header = document.querySelector('header');
+        
+        if(scrollY > 5) {
+            header.classList.add('black_bg');
+        }
+        else {
+            header.classList.remove('black_bg');
+        }
+    });
+}
 
-res 
- .then(res => res.json())
- .then(movie => {
-    console.log(movie);    
-    const title = document.querySelector('.movie_title');
-    const img = document.querySelector('.movie_image');
-
-    title.textContent = movie.original_title;
-    img.src = `${imgEndpoint}${movie.backdrop_path}`;
- })
- .catch(err => console.log(err));
+window.addEventListener('load', (event) => {
+    bootApp();
+});
