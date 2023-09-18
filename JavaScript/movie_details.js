@@ -1,30 +1,179 @@
 // Consts
-export const apiKey = "35a13243cc51617756240cd4b86cae9d";
-export const youtubeApiKey = "AIzaSyCYijGNdXhv4kl23b7oFO24qynw9RguZjs";
-export const apiEndpoint = "https://api.themoviedb.org/3";
-export const imgEndpoint = "	https://image.tmdb.org/t/p/original";
+const apiKey = "35a13243cc51617756240cd4b86cae9d";
+const apiEndpoint = "https://api.themoviedb.org/3";
+const imgEndpoint = "	https://image.tmdb.org/t/p/original";
+const youtubeApiKey = "AIzaSyAXmDZtGOANP4l7rWr1KrhPpG6IScsn2yU";
 
-export const apiPaths = {
+const apiPaths = {
     fetchAllCategories: `${apiEndpoint}/genre/movie/list?api_key=${apiKey}`,
     fetchMoviesList: (categoryId) => `${apiEndpoint}/discover/movie?api_key=${apiKey}&with_genres=${categoryId}`,
     fetchTrendingMovies: `${apiEndpoint}/trending/movie/week?api_key=${apiKey}`,
-    searchMovieById: (movieId) => `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`,
-    searchYoutubeTrailerId: (movieTitle) => `https://youtube.googleapis.com/youtube/v3/search?q=${movieTitle}+trailer&key=${youtubeApiKey}` //https://youtube.googleapis.com/youtube/v3/search?q=john%20wick%20chapter%204%20trailer&videoDuration=any&
+    searchMovieById: (movieId) => `${apiEndpoint}/movie/${movieId}?api_key=${apiKey}`,
+    fetchCastDetails: (movieId) => `${apiEndpoint}/movie/${movieId}/credits?api_key=${apiKey}`,
+    fetchSimilarMovies: (movieId) => `${apiEndpoint}/movie/${movieId}/similar?page=1&api_key=${apiKey}`,
+    searchYoutubeTrailerId: (movieTitle) => `https://youtube.googleapis.com/youtube/v3/search?q=${movieTitle}+trailer&key=${youtubeApiKey}` 
 };
 
-export const url = window.location.search;
-export const urlParams = new URLSearchParams(url);
-export const movieId = urlParams.get('movieId');
+const url = window.location.search;
+const urlParams = new URLSearchParams(url);
+const movieId = urlParams.get('movieId');
 
+const fetchAndReturnMovieDeatils = (movieId) => {
+    const res = fetch(apiPaths.searchMovieById(movieId));
+
+    return res
+     .then(res => res.json())
+     .then(movie => {
+        return movie;
+     })
+     .catch(error => console.error(error));
+};
+
+const searchYoutubeTrailerId = (movieTitle) => {
+    const res = fetch(apiPaths.searchYoutubeTrailerId(movieTitle));
+
+    return res
+     .then(res => res.json())
+     .then(res => {
+        return res.items[0].id.videoId;
+     })
+     .catch(error => console.error("Error : " + error));
+}
+
+const buildSimilarMoviesSection = (moviesObj) => {
+    const similarMoviesContainer = document.querySelector('.similar_movies');
+    moviesObj.sort((a,b) => {
+        return b.popularity - a.popularity;
+    });
+
+    moviesObj.slice(0,10).forEach((movieObj) => {
+        const moviePromise = fetchAndReturnMovieDeatils(movieObj.id);
+        
+        moviePromise
+            .then(movie => {
+                if(movie.backdrop_path !== null) {
+                    const hours = Math.floor(movie.runtime / 60);
+                    const minutes = Math.floor(((movie.runtime / 60) - (Math.floor(movie.runtime / 60))) * 60);
+                    const match = Math.floor(Math.random() * 100);
+                    const age = Math.floor(Math.random() * 18);
+
+                    similarMoviesContainer.innerHTML += `
+                        <div class="movie">
+                            <div class="top">
+                                <div class="image">
+                                    <img src="${imgEndpoint}/${movie.backdrop_path}" alt="${movie.title} Image">
+                                    <div class="image_overlay"></div>
+                                </div>
+                                <p class="movie_name">${movie.title}</p>
+                                ${hours !== 0 && minutes !== 0 ? `<p class="movie_duration">${hours}h ${minutes}m</p>` : ``}
+                            </div>
+                            <div class="bottom">
+                                <div class="movie_details">
+                                    <div class="details">
+                                        <span class="match">${match}% Match</span>
+                                        <div class="other">
+                                        <p class='age_limit_box'><span class="age_limit">${age}+</span></p>
+                                        <span class="year_of_release">${movie.release_date.slice(0,4)}</span>
+                                        </div>
+                                    </div>
+                                    <div class="buttons">
+                                        <i class="wishlist fa-regular fa-plus"></i>
+                                        <i data-movie_id=${movie.id} class="more_details fa-solid fa-angle-down"></i>
+                                    </div>
+                                </div>
+                                <p class="description">${movie.overview.length < 200 ? movie.overview : movie.overview.slice(0,200) + '...'}</p>
+                            </div>
+                        </div>    
+                    `;
+
+                    return movie;
+                }
+            })
+            .then(movie => {
+                if(movie.backdrop_path !== null) {
+                    const movieItems = similarMoviesContainer.children;
+
+                    for(let i = 0; i < movieItems.length; i++) {
+                        // Adding event listener to the more details button
+                        const more_details = movieItems[i].querySelector('.more_details');
+                        more_details.addEventListener('click', (event) => {
+                            const titleElement = movieItems[i].querySelector('.movie_name');
+                            const idPromise = searchYoutubeTrailerId(titleElement.textContent);
+
+                            idPromise
+                            .then(id => {
+                                const trailerId = id;
+                                const movieId = more_details.dataset.movie_id;
+                                window.open(`movie_details.html?movieId=${movieId}&vId=${trailerId}`, '_blank');
+                            })
+                            .catch(error => console.error(error));
+                        })
+
+                        // Click Event on Wishlist Button
+                        const wishlistBtn = movieItems[i].querySelector('.wishlist');
+                        wishlistBtn.addEventListener('click', (event) => {
+                            event.preventDefault();
+                            event.stopImmediatePropagation();
+                            
+                            if(wishlistBtn.classList.contains('wishlist')) {
+                                wishlistBtn.classList.remove('wishlist');
+                                wishlistBtn.classList.add('wishlist_clicked');
+                                alert('Added to Wishlist');
+                            }
+                            else {
+                                wishlistBtn.classList.add('wishlist');
+                                wishlistBtn.classList.remove('wishlist_clicked');
+                                alert('Removed from Wishlist');
+                            }
+                        });
+                    }
+                }
+            })
+            .catch(error => console.error(error));
+    });
+}
 
 // Function for fetching Similar Movies
 const fetchSimilarMovies = (movieId) => {
+    const res = fetch(apiPaths.fetchSimilarMovies(movieId));
 
+    res
+     .then(res => res.json())
+     .then(moviesObj => {
+        buildSimilarMoviesSection(moviesObj.results.slice(0,20));
+     })
+     .catch(error => console.error(error));
 }
+
+// Function to build the Cast Details Section and insert it into the DOM.
+const buildCastDetailsSection = (castObj) => {
+    const castContainer = document.querySelector('.cast');
+    const castImages = castObj.map(cast => {
+        if(cast.known_for_department === 'Acting' && cast.profile_path !== null) {
+            return `
+            <div class="cast_image">
+                <img src="${imgEndpoint}/${cast.profile_path}" alt="${cast.name} Image">
+                <p class="cast_name">${cast.name}</p>
+            </div>        
+            `;
+        }
+    }).join('');
+    
+    castContainer.innerHTML = `
+        ${castImages}    
+    `;
+};
 
 // Function for fetching Cast Details
 const fetchCastDetails = (movieId) => {
+    const res = fetch(apiPaths.fetchCastDetails(movieId));
 
+    res
+     .then(res => res.json())
+     .then(castObj => {
+        buildCastDetailsSection(castObj.cast.slice(0,15));
+     })
+     .catch(error => console.error(error));
 }
 
 // Function to build Movie Details Section

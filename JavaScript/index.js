@@ -1,5 +1,6 @@
 // Consts
 const apiKey = "35a13243cc51617756240cd4b86cae9d";
+const youtubeApiKey = "AIzaSyAXmDZtGOANP4l7rWr1KrhPpG6IScsn2yU";
 const apiEndpoint = "https://api.themoviedb.org/3";
 const imgEndpoint = "	https://image.tmdb.org/t/p/original";
 
@@ -7,8 +8,20 @@ const apiPaths = {
     fetchAllCategories: `${apiEndpoint}/genre/movie/list?api_key=${apiKey}`,
     fetchMoviesList: (categoryId) => `${apiEndpoint}/discover/movie?api_key=${apiKey}&with_genres=${categoryId}`,
     fetchTrendingMovies: `${apiEndpoint}/trending/movie/week?api_key=${apiKey}`,
-    searchMovieById: (movieId) => `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`
+    searchMovieById: (movieId) => `https://api.themoviedb.org/3/movie/${movieId}?api_key=${apiKey}`,
+    searchYoutubeTrailerId: (movieTitle) => `https://youtube.googleapis.com/youtube/v3/search?q=${movieTitle}+trailer&key=${youtubeApiKey}` 
 };
+
+const searchYoutubeTrailerId = (movieTitle) => {
+    const res = fetch(apiPaths.searchYoutubeTrailerId(movieTitle));
+
+    return res
+     .then(res => res.json())
+     .then(res => {
+        return res.items[0].id.videoId;
+     })
+     .catch(error => console.error("Error : " + error));
+}
 
 const buildMoviesCategorySection = (movieObj, categoryName) => {
     const movieCategoriesSection = document.querySelector('.movie_categories_section');
@@ -16,9 +29,9 @@ const buildMoviesCategorySection = (movieObj, categoryName) => {
     const moviesContainer = document.createElement('div');
     moviesContainer.classList.add('movie_container', 'container'); 
 
-    const moviesListElement = movieObj.map(movie => {
+    const moviesListElement = movieObj.map((movie) => {
         const movieTitle = movie.title.length > 30 ? movie.title.slice(0,30) + '...' : movie.title;
-
+        
         return `
             <div class="movie_item">
                 <img class="movie_image" src="${imgEndpoint}${movie.backdrop_path}">
@@ -30,7 +43,7 @@ const buildMoviesCategorySection = (movieObj, categoryName) => {
                             <i class="wishlist fa-regular fa-plus"></i>                         
                         </div>                    
                         <div class="right_btns">
-                            <a href='./HTML/movie_details.html?movieId=${movie.id}' target='_blank'><i id='prev' class="more_details fa-solid fa-angle-down"></i></a>                        
+                            <a class="more" target='_blank'><i id='prev' class="more_details fa-solid fa-angle-down"></i></a>                        
                         </div>                    
                     </div>
                     <div class="movie_data">
@@ -107,6 +120,23 @@ const buildMoviesCategorySection = (movieObj, categoryName) => {
                 // Randomly generating age for the age limit element of the movie.
                 const ageLimit = Math.floor(Math.random() * 18);
                 ageLimitElement.textContent = `${ageLimit}+`;
+
+                // Yt trailer id
+                const moreDetailsElement = movieItems[movieItemInd].querySelector('.more');
+                moreDetailsElement.addEventListener('click', (eventObj) => {
+                    eventObj.stopImmediatePropagation();
+
+                    const titleElement = movieItems[movieItemInd].querySelector('.movie_name');
+                    const idPromise = searchYoutubeTrailerId(titleElement.textContent);
+                    idPromise
+                     .then(id => {
+                         const trailerId = id;
+                         const movieId = movieObj[movieItemInd].id;
+                        window.open(`./HTML/movie_details.html?movieId=${movieId}&vId=${trailerId}`, '_blank');
+                     })
+                     .catch(error => console.error(error));
+                })
+                
             });
 
             // Click Event on Like Button
@@ -165,20 +195,15 @@ const fetchMoviesList = (fetchURL, categoryName) => {
 
 
 const updateBannerSection = (movie) => {
-    const movieCategoriesPromise = fetchAllCategories();
-    let movieCategories = null;
+    // const movieCategoriesPromise = fetchAllCategories();
+    const movieCategoryPromise = fetch(apiPaths.searchMovieById(movie.id));
     let movieCategory = null;
 
-    movieCategoriesPromise
-     .then(categories => {
-        movieCategories = categories; 
-
-        for(let index in movieCategories) {
-            if(movieCategories[index].id === movie.genre_ids[0]) {
-                movieCategory = movieCategories[index].name;
-                break;
-            }
-        }
+    movieCategoryPromise
+     .then(res => res.json())
+     .then(res => {
+        movieCategory = res.genres[0].name;
+        console.log(movieCategory); 
         
         const bannerSection = document.querySelector('.banner');
         bannerSection.style.visibility = "visible";
@@ -229,8 +254,9 @@ const fetchAllCategories = () => {
      .then(res => res.json())
      .then(res => {
         const movieCategories = res.genres;
+
         if(Array.isArray(movieCategories) && movieCategories.length) {
-            movieCategories.slice(0,1).forEach(category => {
+            movieCategories.forEach(category => {
                 if(category.name !== "Documentary") {
                     fetchMoviesList(apiPaths.fetchMoviesList(category.id), category.name);
                 }
@@ -262,7 +288,7 @@ const bootApp = () => {
     });
 }
 
-window.addEventListener('load', () => {
+window.addEventListener('load', (event) => {
     // Booting the App
     bootApp();
 });
