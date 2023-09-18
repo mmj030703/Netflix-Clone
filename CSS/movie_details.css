@@ -19,13 +19,12 @@ body {
 
 .video {
     position: relative;
-    min-height: 100vh;
+    /* min-height: 100vh; */
     padding-bottom: 52%;
 }
 
 .video_container .video iframe {
     position: absolute;
-    top: -94px;
     width: 100%;
     height: max-content;
     aspect-ratio: 16/9;
@@ -37,7 +36,7 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, transparent, #181818);
+    background: linear-gradient(to bottom, transparent, transparent transparent, #181818);
     z-index: -1;
 }
 
@@ -120,8 +119,8 @@ body {
 .watch_now {
     max-width: 80%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    column-gap: 1rem;
     color: #fff;
     margin: 0rem auto 2rem auto;
     background: linear-gradient(to right, #302e2e, #272626);
@@ -132,6 +131,8 @@ body {
 
 .watch_now .netflix_details {
     display: flex;
+    justify-content: space-between;
+    width: 100%;
     column-gap: 1rem;
     align-items: center;
 }
@@ -243,14 +244,13 @@ body {
 
 .cast {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(145px, 2fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 2fr));
     margin-top: 1.5rem;
-    column-gap: 2rem;
+    column-gap: 1rem;
     row-gap: 3rem;
 }
 
 .cast .cast_image {
-    width: 159px;
     height: 300px;
     cursor: pointer;
 }
@@ -469,6 +469,225 @@ footer p {
 }
 
 /* Footer Section */
+
+
+/* Media Queries */
+@media screen and (max-width : 768px) {
+    /* Cast Details Section */
+
+    .cast_section  {
+        /* Removing Blue Highlight */
+        pointer-events: none;
+        -webkit-tap-highlight-color: transparent;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    /* Cast Details Section */
+}
+
+@media screen and (max-width : 670px) {
+    /* Video Container */
+    .video_container {
+        margin-bottom: 4rem;
+    }
+
+    .iframe_bottom_overlay {
+        display: none;
+    }
+
+    .buttons button, .buttons .volume_buttons span {
+        bottom: 0;
+    }
+
+    .buttons button {
+        font-size: 1rem;
+    }
+
+    .buttons .volume_buttons span, .buttons button i {
+        font-size: 1.7rem;
+    }
+
+    /* Video Container */
+
+    /* Movie Details */
+    .movie_details_section .movie_details {
+        max-width: 95%;
+    }
+    .details {
+        flex-direction: column;
+        align-items: flex-start;
+        row-gap: 1.6rem;
+    }
+
+    .other_details {
+        font-size: 1.05rem;
+    }
+
+    /* Movie Details */
+
+    .watch_now img {
+        display: none;
+    }
+
+    .similar_movies {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        row-gap: 1rem;
+        column-gap: 1rem;
+        margin-top: 1.5rem;
+    }
+}
+
+@media screen and (max-width : 500px) {
+    html {
+        font-size: 14px;
+    }
+
+    /* Video Container */
+    .iframe_overlay {
+        display: none;
+    }
+    
+    .buttons button {
+        font-size: .9rem;
+    }
+
+    .buttons button i {
+        font-size: 1rem;
+    }
+
+    .buttons .volume_buttons span {
+        font-size: 1.7rem;
+    }
+
+    .buttons .volume_buttons span {
+        top: 10px;
+        height: max-content;
+    }
+
+    .buttons button {
+        left: calc(50% - 50px);
+        bottom: -65px;
+    }
+
+    /* Video Container */
+
+    /* Watch Now Cantainer */
+    .watch_now_section {
+        display: flex;
+        padding-top: 3rem;
+    }
+    .watch_now {
+        padding: 1rem .8rem;
+    }
+    .watch_now .netflix_details {
+        flex-direction: column;
+        row-gap: .3rem;
+    }
+
+    .watch_now .netflix_details span {
+        font-size: .9rem;
+        box-shadow: none;
+    }
+
+    .watch_now img {
+        display: block;
+        width: 45px;
+    }
+
+    .watch_now .netflix_details .watch {
+        font-size: .85rem;
+    }
+
+    /* Watch Now Cantainer */
+
+    /* Movie Details Section */
+
+    .movie_details_section {
+        margin-top: 1rem;
+    }
+
+
+    /* Movie Details Section */
+    
+    /* Cast Details Cantainer */
+
+    .cast {
+        grid-template-columns: repeat(auto-fill, minmax(135px, 1fr));
+    }
+
+    .cast_section .cast_heading {
+        font-size: 1.6rem;
+    }
+
+    /* Cast Details Cantainer */
+
+    /* Similar Movies Cantainer */
+
+    .similar_movies {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    .similar_movies_container .heading {
+        font-size: 1.6rem;
+    }
+
+    .bottom .description {
+        display: none;
+    }
+    
+    /* Similar Movies Cantainer */
+
+}
+
+@media screen and (max-width : 305px) { 
+    /* Video Container */
+    .buttons button {
+        font-size: .8rem;
+    }
+
+    .buttons button {
+        bottom: -54px;
+    }
+
+    /* Video Container */
+
+    /* Movie Details Section */
+
+    .movie_details_section .movie_details .extra {
+        font-size: .85rem;
+    }
+
+    /* Movie Details Section */
+
+    /* Watch Now Cantainer */
+
+    .watch_now {
+        padding: 1rem .8rem;
+    }
+    .watch_now .netflix_details {
+        justify-content: center;
+        row-gap: .3rem;
+    }
+
+    .watch_now .netflix_details span {
+        display: none;
+    }
+
+    .watch_now .netflix_details button {
+        font-size: .6rem;
+    }
+
+    .watch_now img {
+        width: 40px;
+    }
+
+    /* Watch Now Cantainer */  
+}
 
 /* Utility Classes */
 

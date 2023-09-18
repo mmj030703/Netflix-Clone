@@ -11,12 +11,18 @@ const apiPaths = {
     searchMovieById: (movieId) => `${apiEndpoint}/movie/${movieId}?api_key=${apiKey}`,
     fetchCastDetails: (movieId) => `${apiEndpoint}/movie/${movieId}/credits?api_key=${apiKey}`,
     fetchSimilarMovies: (movieId) => `${apiEndpoint}/movie/${movieId}/similar?page=1&api_key=${apiKey}`,
-    searchYoutubeTrailerId: (movieTitle) => `https://youtube.googleapis.com/youtube/v3/search?q=${movieTitle}+trailer&key=${youtubeApiKey}` 
+    searchYoutubeTrailerId: (movieTitle) => `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${movieTitle+' '}+trailer&key=${youtubeApiKey}` 
 };
 
 const url = window.location.search;
 const urlParams = new URLSearchParams(url);
 const movieId = urlParams.get('movieId');
+const ytId = urlParams.get('vId');
+
+if(ytId === '0') {
+    const videoContainer = document.querySelector('.video_container');
+    videoContainer.remove();
+}
 
 const fetchAndReturnMovieDeatils = (movieId) => {
     const res = fetch(apiPaths.searchMovieById(movieId));
@@ -35,7 +41,12 @@ const searchYoutubeTrailerId = (movieTitle) => {
     return res
      .then(res => res.json())
      .then(res => {
-        return res.items[0].id.videoId;
+         if(res.items[0].snippet.title.toLowerCase().match(movieTitle.toLowerCase())) {
+            return res.items[0].id.videoId; 
+        }
+        else {
+            return 0;
+        }
      })
      .catch(error => console.error("Error : " + error));
 }
