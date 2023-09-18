@@ -19,22 +19,24 @@
 <body>
     <!-- Video Container -->
 
-    <!-- <div class="video_container"> -->
-        <!-- <div class="video" id='player'> -->
-            <!-- <iframe src="https://www.youtube.com/embed/COv52Qyctws?si=pXAr92MDUVGHBYji?autoplay=1&rel=0"
-                title="YouTube video player" frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen></iframe>
+    <div class="video_container">
+        <div class="video">
+            <div id="player"></div>
             <div class="iframe_overlay"></div>
             <div class="iframe_bottom_overlay"></div>
             <div class="buttons">
-                <button><i class="playBtn fa-solid fa-play"></i> Play</button>
-                <span class="unmute material-icons">
-                    volume_up
-                </span>
-            </div> -->
-        <!-- </div> -->
-    <!-- </div> -->
+                <button class="play"><i class="playBtn fa-solid fa-play"></i> Play</button>
+                <div class="volume_buttons">
+                    <span class="unmute material-icons">
+                        volume_up
+                    </span>
+                    <span class="mute material-icons">
+                        volume_off
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Video Container -->
 
@@ -55,7 +57,7 @@
     <!-- Movie Details Section -->
 
     <section class="movie_details_section">
-        <!-- <div class="movie_details_container container">
+        
             <h2 class="movie_title">Jawan</h2>
             <div class="details">
                 <div class="movie_details">
@@ -99,34 +101,7 @@
         <div class="cast_container container">
             <h2 class="cast_heading">Cast</h2>
             <div class="cast">
-                <div class="cast_image">
-                    <img src="../Images/actor1.jpg" alt="Shah Rukh Khan Image">
-                    <p class="cast_name">Shah Rukh Khan</p>
-                </div>
-                <div class="cast_image">
-                    <img src="../Images/actor2.jpg" alt="Nayantara Image">
-                    <p class="cast_name">Nayantara</p>
-                </div>
-                <div class="cast_image">
-                    <img src="../Images/actor3.jpg" alt="Vijay Sethupati Image">
-                    <p class="cast_name">Vijay Sethupati</p>
-                </div>
-                <div class="cast_image">
-                    <img src="../Images/actor4.jpg" alt="Priya Mani Image">
-                    <p class="cast_name">Priya Mani</p>
-                </div>
-                <div class="cast_image">
-                    <img src="../Images/actor5.jpeg" alt="Sanya Malhotra Image">
-                    <p class="cast_name">Sanya Malhotra</p>
-                </div>
-                <div class="cast_image">
-                    <img src="../Images/actor6.jpg" alt="Sunil Grover Image">
-                    <p class="cast_name">Sunil Grover</p>
-                </div>
-                <div class="cast_image">
-                    <img src="../Images/actor7.jpg" alt="Yogi Babu Image">
-                    <p class="cast_name">Yogi Babu</p>
-                </div>
+                
             </div>
         </div>
     </section>
@@ -138,225 +113,20 @@
         <div class="similar_movies_container container">
             <h2 class="heading">You would also like</h2>
             <div class="similar_movies">
-                <div class="movie">
-                    <div class="top">
-                        <div class="image">
-                            <img src="../Images/movie8.jpg" alt="Pathan Image">
-                            <div class="image_overlay"></div>
-                        </div>
-                        <p class="movie_name">Pathan</p>
-                        <p class="movie_duration">2h 30m</p>
-                    </div>
-                    <div class="bottom">
-                        <div class="movie_details">
-                            <div class="details">
-                                <span class="match">100% Match</span>
-                                <div class="other">
-                                    <span class="year_of_release">2023</span>
-                                    <p class='age_limit_box'><span class="age_limit">10+</span></p>
-                                </div>
-                            </div>
-                            <div class="buttons">
-                                <i class="wishlist fa-regular fa-plus"></i>
-                                <a href='../HTML/movie_details.html?movieId=872906' target='_blank'><i class="more_details fa-solid fa-angle-down"></i></a>
-                            </div>
-                        </div>
-                        <p class="description">A soldier caught by enemies and presumed dead comes back to complete his mission, accompanied by old companions and foes.</p>
-                    </div>
-                </div>
-                <div class="movie">
-                    <div class="top">
-                        <div class="image">
-                            <img src="../Images/movie2.jpg" alt="Pathan Image">
-                            <div class="image_overlay"></div>
-                        </div>
-                        <p class="movie_name">Chor Nikal Ke Bhaga</p>
-                        <p class="movie_duration">2h 30m</p>
-                    </div>
-                    <div class="bottom">
-                        <div class="movie_details">
-                            <div class="details">
-                                <span class="match">100% Match</span>
-                                <div class="other">
-                                    <span class="year_of_release">2023</span>
-                                    <p class='age_limit_box'><span class="age_limit">10+</span></p>
-                                </div>
-                            </div>
-                            <div class="buttons">
-                                <i class="wishlist fa-regular fa-plus"></i>
-                                <a href='../HTML/movie_details.html?movieId=872906' target='_blank'><i class="more_details fa-solid fa-angle-down"></i></a>
-                            </div>
-                        </div>
-                        <p class="description">A soldier caught by enemies and presumed dead comes back to complete his mission, accompanied by old companions and foes.</p>
-                    </div>
-                </div>
-                <div class="movie">
-                    <div class="top">
-                        <div class="image">
-                            <img src="../Images/movie3.jpg" alt="Pathan Image">
-                            <div class="image_overlay"></div>
-                        </div>
-                        <p class="movie_name">Raw</p>
-                        <p class="movie_duration">2h 30m</p>
-                    </div>
-                    <div class="bottom">
-                        <div class="movie_details">
-                            <div class="details">
-                                <span class="match">100% Match</span>
-                                <div class="other">
-                                    <span class="year_of_release">2023</span>
-                                    <p class='age_limit_box'><span class="age_limit">10+</span></p>
-                                </div>
-                            </div>
-                            <div class="buttons">
-                                <i class="wishlist fa-regular fa-plus"></i>
-                                <a href='../HTML/movie_details.html?movieId=872906' target='_blank'><i class="more_details fa-solid fa-angle-down"></i></a>
-                            </div>
-                        </div>
-                        <p class="description">A soldier caught by enemies and presumed dead comes back to complete his mission, accompanied by old companions and foes.</p>
-                    </div>
-                </div>
-                <div class="movie">
-                    <div class="top">
-                        <div class="image">
-                            <img src="../Images/movie1.jpg" alt="Pathan Image">
-                            <div class="image_overlay"></div>
-                        </div>
-                        <p class="movie_name">Adipurush</p>
-                        <p class="movie_duration">2h 30m</p>
-                    </div>
-                    <div class="bottom">
-                        <div class="movie_details">
-                            <div class="details">
-                                <span class="match">100% Match</span>
-                                <div class="other">
-                                    <span class="year_of_release">2023</span>
-                                    <p class='age_limit_box'><span class="age_limit">10+</span></p>
-                                </div>
-                            </div>
-                            <div class="buttons">
-                                <i class="wishlist fa-regular fa-plus"></i>
-                                <a href='../HTML/movie_details.html?movieId=872906' target='_blank'><i class="more_details fa-solid fa-angle-down"></i></a>
-                            </div>
-                        </div>
-                        <p class="description">A soldier caught by enemies and presumed dead comes back to complete his mission, accompanied by old companions and foes.</p>
-                    </div>
-                </div>
-                <div class="movie">
-                    <div class="top">
-                        <div class="image">
-                            <img src="../Images/movie4.jpg" alt="Pathan Image">
-                            <div class="image_overlay"></div>
-                        </div>
-                        <p class="movie_name">Extraction 2</p>
-                        <p class="movie_duration">2h 30m</p>
-                    </div>
-                    <div class="bottom">
-                        <div class="movie_details">
-                            <div class="details">
-                                <span class="match">100% Match</span>
-                                <div class="other">
-                                    <span class="year_of_release">2023</span>
-                                    <p class='age_limit_box'><span class="age_limit">10+</span></p>
-                                </div>
-                            </div>
-                            <div class="buttons">
-                                <i class="wishlist fa-regular fa-plus"></i>
-                                <a href='../HTML/movie_details.html?movieId=872906' target='_blank'><i class="more_details fa-solid fa-angle-down"></i></a>
-                            </div>
-                        </div>
-                        <p class="description">A soldier caught by enemies and presumed dead comes back to complete his mission, accompanied by old companions and foes.</p>
-                    </div>
-                </div>
-                <div class="movie">
-                    <div class="top">
-                        <div class="image">
-                            <img src="../Images/movie5.jpg" alt="Pathan Image">
-                            <div class="image_overlay"></div>
-                        </div>
-                        <p class="movie_name">Baby Boss Family Business</p>
-                        <p class="movie_duration">2h 30m</p>
-                    </div>
-                    <div class="bottom">
-                        <div class="movie_details">
-                            <div class="details">
-                                <span class="match">100% Match</span>
-                                <div class="other">
-                                    <span class="year_of_release">2023</span>
-                                    <p class='age_limit_box'><span class="age_limit">10+</span></p>
-                                </div>
-                            </div>
-                            <div class="buttons">
-                                <i class="wishlist fa-regular fa-plus"></i>
-                                <a href='../HTML/movie_details.html?movieId=872906' target='_blank'><i class="more_details fa-solid fa-angle-down"></i></a>
-                            </div>
-                        </div>
-                        <p class="description">A soldier caught by enemies and presumed dead comes back to complete his mission, accompanied by old companions and foes.</p>
-                    </div>
-                </div>
-                <div class="movie">
-                    <div class="top">
-                        <div class="image">
-                            <img src="../Images/movie6.jpg" alt="Pathan Image">
-                            <div class="image_overlay"></div>
-                        </div>
-                        <p class="movie_name">Jagame Thandhiram</p>
-                        <p class="movie_duration">2h 30m</p>
-                    </div>
-                    <div class="bottom">
-                        <div class="movie_details">
-                            <div class="details">
-                                <span class="match">100% Match</span>
-                                <div class="other">
-                                    <span class="year_of_release">2023</span>
-                                    <p class='age_limit_box'><span class="age_limit">10+</span></p>
-                                </div>
-                            </div>
-                            <div class="buttons">
-                                <i class="wishlist fa-regular fa-plus"></i>
-                                <a href='../HTML/movie_details.html?movieId=872906' target='_blank'><i class="more_details fa-solid fa-angle-down"></i></a>
-                            </div>
-                        </div>
-                        <p class="description">A soldier caught by enemies and presumed dead comes back to complete his mission, accompanied by old companions and foes.</p>
-                    </div>
-                </div>
-
-                <div class="movie">
-                    <div class="top">
-                        <div class="image">
-                            <img src="../Images/movie7.jpg" alt="Pathan Image">
-                            <div class="image_overlay"></div>
-                        </div>
-                        <p class="movie_name">RRR</p>
-                        <p class="movie_duration">2h 30m</p>
-                    </div>
-                    <div class="bottom">
-                        <div class="movie_details">
-                            <div class="details">
-                                <span class="match">100% Match</span>
-                                <div class="other">
-                                    <span class="year_of_release">2023</span>
-                                    <p class='age_limit_box'><span class="age_limit">10+</span></p>
-                                </div>
-                            </div>
-                            <div class="buttons">
-                                <i class="wishlist fa-regular fa-plus"></i>
-                                <a href='../HTML/movie_details.html?movieId=872906' target='_blank'><i class="more_details fa-solid fa-angle-down"></i></a>
-                            </div>
-                        </div>
-                        <p class="description">A soldier caught by enemies and presumed dead comes back to complete his mission, accompanied by old companions and foes.</p>
-                    </div>
-                </div>
 
             </div>
         </div>
     </section>
 
-    <div id="player"></div>
+    <!-- Footer Section -->
+    <footer class="container">
+        <p>Netflix India</p>
+    </footer>
+    <!-- Footer Section -->
 
     <!-- Script -->
     <script type="module" src="../JavaScript/movie_details.js" defer></script>
-    <script type="module" src="../JavaScript/youtubeIframeApi.js" defer></script>
+    <script src="../JavaScript/youtubeIframeApi.js" defer></script>
 </body>
 
 </html>
