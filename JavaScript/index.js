@@ -135,7 +135,7 @@ const buildMoviesCategorySection = (movieObj, categoryName) => {
                         window.open(`./HTML/movie_details.html?movieId=${movieId}&vId=${trailerId}`, '_blank');
                      })
                      .catch(error => console.error(error));
-                })
+                });
                 
             });
 
@@ -148,12 +148,10 @@ const buildMoviesCategorySection = (movieObj, categoryName) => {
                 if(likeBtn.classList.contains('like')) {
                     likeBtn.classList.remove('like');
                     likeBtn.classList.add('likeBtn_liked');
-                    alert('Liked');
                 }
                 else {
                     likeBtn.classList.add('like');
                     likeBtn.classList.remove('likeBtn_liked');
-                    alert('Unliked');
                 }
             });
 
@@ -166,12 +164,10 @@ const buildMoviesCategorySection = (movieObj, categoryName) => {
                 if(wishlistBtn.classList.contains('wishlist')) {
                     wishlistBtn.classList.remove('wishlist');
                     wishlistBtn.classList.add('wishlist_clicked');
-                    alert('Added to Wishlist');
                 }
                 else {
                     wishlistBtn.classList.add('wishlist');
                     wishlistBtn.classList.remove('wishlist_clicked');
-                    alert('Removed from Wishlist');
                 }
             });
         };
@@ -222,7 +218,7 @@ const updateBannerSection = (movie) => {
                 <p class="movie_release_year">${movie.release_date}</p>
                 <p class="movie_category">${movieCategory}</p>
             </div>
-            <p class="movie_description">${movie.overview}</p>
+            <p class="movie_description">${movie.overview.length <= 200 ? movie.overview : movie.overview.slice(0, 200) + '...'}</p>
         `;
     
         bannerSection.appendChild(bannerContainer);
@@ -286,6 +282,14 @@ const bootApp = () => {
             header.classList.remove('black_bg');
         }
     });
+
+    // Adding Click Event to the Mobile and tablet Navbar
+    const menu = document.querySelector('.tablet_mobile_navbar_list');
+    const menuHeading = document.querySelector('.small_devices_navbar .heading');
+    
+    menuHeading.addEventListener('click', (event) => {
+        menu.classList.toggle('show');
+    })
 }
 
 window.addEventListener('load', (event) => {
