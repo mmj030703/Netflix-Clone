@@ -418,7 +418,7 @@ touchFastForward.addEventListener('click', fastForwardVideoPlayer);
 // Adding event to window when orientation is changed.
 window.addEventListener('orientationchange', (e) => {
   
-    // Getting Orientation Object from orintation property in screen object. 
+    // Getting Orientation Object from orintation property in screen object. m
     const orientationObj = screen.orientation;
 
     // If the orientation has changed to landscape i.e angle 90 || -90deg then display a message and hide all other contents. 
